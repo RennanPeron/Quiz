@@ -1,6 +1,11 @@
 <template>
   <div class="ctr">
-    <Questions v-if="questionsAnswered < questions.length" :questions="questions"></Questions>
+    <Questions 
+    v-if="questionsAnswered < questions.length" 
+    :questions="questions"
+    :questionsAnswered="questionsAnswered"
+    @question-answered="QuestionAnswered"
+    ></Questions>
     <Result v-else></Result>
     <button type="button" class="reset-btn">Reset</button>
   </div>
@@ -19,25 +24,26 @@ export default {
   data() {
     return {
       questionsAnswered: 0,
+      totalCorrect: 0,
       questions: [
         {
           q: 'What is 2 + 2?',
           answers: [
             {
               text: '4',
-              is_correct: true
+              isCorrect: true
             },
             {
               text: '3',
-              is_correct: false
+              isCorrect: false
             },
             {
               text: 'Fish',
-              is_correct: false
+              isCorrect: false
             },
             {
               text: '5',
-              is_correct: false
+              isCorrect: false
             }
           ]
         },
@@ -46,19 +52,19 @@ export default {
           answers: [
             {
               text: '5',
-              is_correct: false
+              isCorrect: false
             },
             {
               text: '7',
-              is_correct: false
+              isCorrect: false
             },
             {
               text: '6',
-              is_correct: true
+              isCorrect: true
             },
             {
               text: '12',
-              is_correct: false
+              isCorrect: false
             }
           ]
         },
@@ -67,15 +73,15 @@ export default {
           answers: [
             {
               text: 'e',
-              is_correct: false
+              isCorrect: false
             },
             {
               text: 'a',
-              is_correct: true
+              isCorrect: true
             },
             {
               text: 'i',
-              is_correct: false
+              isCorrect: false
             }
           ]
         },
@@ -95,6 +101,14 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    QuestionAnswered(isCorrect) {
+      if(isCorrect) {
+        this.totalCorrect++
+      }
+      this.questionsAnswered++
+    },
   }
 }
 </script>
